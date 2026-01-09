@@ -11,7 +11,7 @@ github_username: <your_username>
 
 first_name: <Your Name>
 last_name: <Your Last Name>
-
+repo: <URL or None>
 grading: <homeworks OR project>
 
 agreement: |
@@ -35,7 +35,7 @@ github_username: peterluce
 
 first_name: Пётр
 last_name: Лукьянчук
-
+repo: https://github.com/peterluce/FBB_infrastruct_HWs
 grading: homeworks
 
 agreement: |
