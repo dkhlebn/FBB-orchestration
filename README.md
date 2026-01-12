@@ -1,6 +1,6 @@
 # Инфраструктура вычислений в биоинформатике.
 
-Репозиторий посвящён курсу на Факультете Биоинженерии и Биоинформатики МГУ.
+Репозиторий для курса на Факультете Биоинженерии и Биоинформатики МГУ.
 
 Курс посвящён современным подходам к организации вычислительной инфраструктуры в 
 биоинформатике и смежных областях анализа данных. Рассматривается полный стек 
@@ -37,6 +37,7 @@
 * Фреймворками для построения своего API: `FastAPI`, `pydantic`;
 * Telegram Bot API;
 * Стеком сетевых протоколов TCP/IP;
+* Пакетами для работы с сокетами и клиент-серверными архитектурами (`socket`, `asyncio`, `aiohttp`);
 * Утилитами командной строки для работы с различными уровнями сетевых протоколов;
 * Простейшими алгоритмами криптографии (RSA, Диффи-Хельман);
 * Принципами контейнеризации в Docker, Apptainer;
@@ -53,22 +54,22 @@
 для более глубокого погружения и рекомендации материалов, ниже представлены ссылки 
 с полезными книгами:
 
-1. Loeliger, J., & Ponuthorai, P. K. (2022). *Version control with Git: Powerful tools 
-and techniques for collaborative software development* (3rd ed.). O’Reilly Media.
+1. Loeliger, J., & Ponuthorai, P. K. (2022). **Version control with Git: Powerful tools 
+and techniques for collaborative software development (3rd ed.)**. O’Reilly Media.
 
-2. Kurose, J. F., & Ross, K. W. (2021). *Computer networking: A top-down approach (8th ed.)*. Pearson. 
-У этого материала есть отдельный (сайт)[https://gaia.cs.umass.edu/kurose_ross/index.php], 
+2. Kurose, J. F., & Ross, K. W. (2021). **Computer networking: A top-down approach (8th ed.)**. Pearson. 
+У этого материала есть отдельный [сайт](https://gaia.cs.umass.edu/kurose_ross/index.php), 
 где есть много чего полезного и интересного.
 
-3. Mitchell, R. (2018). *Web scraping with Python: Collecting more data from the modern web (2nd ed.)*. 
+3. Mitchell, R. (2018). **Web scraping with Python: Collecting more data from the modern web (2nd ed.)**. 
 O’Reilly Media.
 
-4. Gough, J., Bryant, D., & Auburn, M. (2021). *API architecture and design: How to design, build, 
-and expose APIs*. Manning Publications.
+4. Gough, J., Bryant, D., & Auburn, M. (2021). **API architecture and design: How to design, build, 
+and expose APIs**. Manning Publications.
 
-5. Harenslak, B., & De Ruiter, J. (2019). *Data pipelines with Apache Airflow*. Manning Publications.
+5. Harenslak, B., & De Ruiter, J. (2019). **Data pipelines with Apache Airflow**. Manning Publications.
 
-6. Raj, E. (2023). *Engineering MLOps (2nd ed.)*. Packt Publishing.
+6. Raj, E. (2023). **Engineering MLOps (2nd ed.)**. Packt Publishing.
 
-7. Alla, S., & Adari, S. K. (2020). *Beginning MLOps with MLflow: Deploy models in AWS SageMaker, 
-Google Cloud, and Microsoft Azure*. Apress.
+7. Alla, S., & Adari, S. K. (2020). **Beginning MLOps with MLflow: Deploy models in AWS SageMaker, 
+Google Cloud, and Microsoft Azure**. Apress.
