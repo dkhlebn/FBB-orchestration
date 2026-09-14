@@ -16,18 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.head.repo.owner.login != 'dkhlebn'
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.base.sha }}
-
-      - name: Fetch pull request commit
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+      - name: Initialize repository
         run: |
-          git fetch origin \
-            "pull/${PR_NUMBER}/head:refs/remotes/origin/pr-${PR_NUMBER}"
+          git init
+          git remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
+          git fetch origin "${{ github.event.pull_request.base.sha }}"
+          git fetch origin "pull/${{ github.event.pull_request.number }}/head"
+          git checkout --detach "${{ github.event.pull_request.base.sha }}"
 
       - name: Setup Python
         uses: actions/setup-python@v5
