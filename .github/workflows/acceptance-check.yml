@@ -25,7 +25,7 @@ jobs:
           git checkout --detach "${{ github.event.pull_request.base.sha }}"
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
 
@@ -51,11 +51,12 @@ jobs:
 
       - name: Enable automerge
         if: success()
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.AUTOMERGE_TOKEN }}
-          pull-request-number: ${{ github.event.pull_request.number }}
-          merge-method: squash
+        env:
+          GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN }}
+        run: |
+          gh pr merge "${{ github.event.pull_request.number }}" \
+            --squash --auto \
+            --repo "$GITHUB_REPOSITORY"
 
       - name: Report success
         if: success()
