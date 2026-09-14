@@ -68,30 +68,48 @@ def validate_pr_title(pr_author, pr_title):
     return errors
 
 
-def validate_file_exists(pr_author):
+def validate_file_exists(pr_author, head_sha):
     errors = []
-    yaml_path = Path('accepts_2025') / f'{pr_author}.yaml'
-    if not yaml_path.exists():
+    yaml_path = f'accepts_2025/{pr_author}.yaml'
+
+    result = subprocess.run(
+        ['git', 'cat-file', '-e', f'{head_sha}:{yaml_path}'],
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
         errors.append(
             f"!!  Файл не найден.\n"
-            f"    Ожидаемый путь: 'accepts_2025/{pr_author}.yaml'\n"
+            f"    Ожидаемый путь: '{yaml_path}'\n"
             f"    Убедитесь, что файл создан в правильной папке и имеет правильное имя."
         )
         return errors, None
-    else:
-        print(f"....Файл найден: {yaml_path}")
-        return errors, yaml_path
 
+    print(f"....Файл найден: {yaml_path}")
+    return errors, yaml_path
 
-def validate_yaml_content(pr_author, yaml_path):
+def validate_yaml_content(pr_author, yaml_path, head_sha):
     errors = []
+
     try:
-        with open(yaml_path, 'r', encoding='utf-8') as f:
-            data = yaml.safe_load(f)
+        result = subprocess.run(
+            ['git', 'show', f'{head_sha}:{yaml_path}'],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+
+        data = yaml.safe_load(result.stdout)
+
         if data is None:
-            errors.append(f"!!  Файл '{yaml_path}' пустой или содержит только комментарии")
+            errors.append(
+                f"!!  Файл '{yaml_path}' пустой или содержит только комментарии"
+            )
             return errors
-        required_fields = ['github_username', 'first_name', 'last_name', 'repo', 'grading', 'agreement', 'agree_to_rules']
+
+        required_fields = ['github_username', 'first_name', 'last_name',
+                           'repo', 'grading', 'agreement', 'agree_to_rules']
         for field in required_fields:
             if field not in data:
                 errors.append(f"!!  В файле отсутствует обязательное поле: '{field}'")
@@ -170,8 +188,8 @@ def validate_yaml_content(pr_author, yaml_path):
                 )
             else:
                 print("....Согласие с правилами подтверждено (agree_to_rules: yes)")
-    except:
-        print("!!  Ошибка с YAML-файлом.")
+    except Exception as e:
+        errors.append(f"!!  Ошибка с YAML-файлом: {e}")
     return errors
 
 
@@ -239,11 +257,11 @@ def main():
     print()
     all_errors.extend(validate_pr_title(env['pr_author'], env['pr_title']))
     print()
-    file_errors, yaml_path = validate_file_exists(env['pr_author'])
+    file_errors, yaml_path = validate_file_exists(env['pr_author'], env['head_sha'])
     all_errors.extend(file_errors)
     print()
     if yaml_path:
-        content_errors = validate_yaml_content(env['pr_author'], yaml_path)
+        content_errors = validate_yaml_content(env['pr_author'], yaml_path, env['head_sha'])
         all_errors.extend(content_errors)
         print()
     changed_errors = validate_changed_files(
